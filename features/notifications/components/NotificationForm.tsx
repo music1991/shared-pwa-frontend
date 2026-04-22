@@ -4,16 +4,23 @@ import Textarea from '../../../shared/components/ui/Textarea';
 import Button from '../../../shared/components/ui/Button';
 import AlertMessage from '../../../shared/components/feedback/AlertMessage';
 import useSendNotification from '../hooks/useSendNotification';
+import UserSelector from './UserSelector';
 
 export default function NotificationForm() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [mode, setMode] = useState<'all' | 'one' | 'many'>('all');
   const [targetUserId, setTargetUserId] = useState('');
-  const [targetUserIdsRaw, setTargetUserIdsRaw] = useState('');
+  const [targetUserIds, setTargetUserIds] = useState<string[]>([]);
 
   const { loading, successMessage, errorMessage, sendNotification } =
     useSendNotification();
+
+  const handleModeChange = (value: 'all' | 'one' | 'many') => {
+    setMode(value);
+    setTargetUserId('');
+    setTargetUserIds([]);
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -28,14 +35,19 @@ export default function NotificationForm() {
     }
 
     if (mode === 'one') {
-      payload.targetUserId = targetUserId.trim();
+      if (!targetUserId) {
+        return;
+      }
+
+      payload.targetUserId = targetUserId;
     }
 
     if (mode === 'many') {
-      payload.targetUserIds = targetUserIdsRaw
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean);
+      if (!targetUserIds.length) {
+        return;
+      }
+
+      payload.targetUserIds = targetUserIds;
     }
 
     await sendNotification(payload);
@@ -70,7 +82,7 @@ export default function NotificationForm() {
         <select
           className="select"
           value={mode}
-          onChange={(e) => setMode(e.target.value as 'all' | 'one' | 'many')}
+          onChange={(e) => handleModeChange(e.target.value as 'all' | 'one' | 'many')}
         >
           <option value="all">Todos</option>
           <option value="one">Un usuario</option>
@@ -79,20 +91,22 @@ export default function NotificationForm() {
       </label>
 
       {mode === 'one' ? (
-        <Input
-          label="UUID del usuario"
-          value={targetUserId}
-          onChange={(e) => setTargetUserId(e.target.value)}
-          placeholder="33333333-3333-3333-3333-333333333333"
+        <UserSelector
+          mode="one"
+          selectedUserId={targetUserId}
+          selectedUserIds={[]}
+          onSelectOne={setTargetUserId}
+          onSelectMany={() => {}}
         />
       ) : null}
 
       {mode === 'many' ? (
-        <Textarea
-          label="UUIDs separados por coma"
-          value={targetUserIdsRaw}
-          onChange={(e) => setTargetUserIdsRaw(e.target.value)}
-          placeholder="33333333-3333-3333-3333-333333333333, 44444444-4444-4444-4444-444444444444"
+        <UserSelector
+          mode="many"
+          selectedUserId=""
+          selectedUserIds={targetUserIds}
+          onSelectOne={() => {}}
+          onSelectMany={setTargetUserIds}
         />
       ) : null}
 
