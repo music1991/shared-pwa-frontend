@@ -3,9 +3,23 @@ import EnableNotificationsCard from '../components/EnableNotificationsCard';
 import NotificationSection, {
   type NotificationItem,
 } from '../components/NotificationSection';
+import { notificationsService } from '../services/notifications.service';
 
 export default function UserNotificationsPage() {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+
+  useEffect(() => {
+    const loadNotifications = async () => {
+      try {
+        const result = await notificationsService.getMine();
+        setNotifications(result);
+      } catch (error) {
+        console.error('Error loading notifications', error);
+      }
+    };
+
+    loadNotifications();
+  }, []);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -15,8 +29,12 @@ export default function UserNotificationsPage() {
         if (payload?.title || payload?.body) {
           setNotifications((prev) => [
             {
+              id: `live-${Date.now()}`,
               title: payload.title ?? 'Nueva notificación',
               body: payload.body ?? '',
+              read: false,
+              created_at: new Date().toISOString(),
+              status: 'sent',
             },
             ...prev,
           ]);

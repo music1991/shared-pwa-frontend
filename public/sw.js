@@ -42,8 +42,8 @@ self.addEventListener('push', (event) => {
 
       await self.registration.showNotification(data.title, {
         body: data.body,
-        icon: '/vite.svg',
-        badge: '/vite.svg',
+        icon: '/pwa1.png',
+        badge: '/pwa2.png',
         requireInteraction: true,
         data,
       });

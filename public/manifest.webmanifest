@@ -1,6 +1,6 @@
 {
-  "name": "Notify Center",
-  "short_name": "Notify",
+  "name": "Wayra Prototipe",
+  "short_name": "Wayra",
   "description": "PWA para login, notificaciones push y gestión por roles.",
   "start_url": "/",
   "scope": "/",
