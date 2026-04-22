@@ -1,4 +1,4 @@
-type NotificationItem = {
+export type NotificationItem = {
   title: string;
   body: string;
 };

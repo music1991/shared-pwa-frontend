@@ -1,26 +1,37 @@
 import { useEffect, useState } from 'react';
 import EnableNotificationsCard from '../components/EnableNotificationsCard';
-import NotificationSection from '../components/NotificationSection';
-
-type InAppNotification = {
-  title: string;
-  body: string;
-};
+import NotificationSection, {
+  type NotificationItem,
+} from '../components/NotificationSection';
 
 export default function UserNotificationsPage() {
-  const [notifications, setNotifications] = useState<InAppNotification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type === 'PUSH_RECEIVED') {
-        setNotifications((prev) => [event.data.payload, ...prev]);
+        const payload = event.data.payload;
+
+        if (payload?.title || payload?.body) {
+          setNotifications((prev) => [
+            {
+              title: payload.title ?? 'Nueva notificación',
+              body: payload.body ?? '',
+            },
+            ...prev,
+          ]);
+        }
       }
     };
 
-    navigator.serviceWorker?.addEventListener('message', handleMessage);
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener('message', handleMessage);
+    }
 
     return () => {
-      navigator.serviceWorker?.removeEventListener('message', handleMessage);
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.removeEventListener('message', handleMessage);
+      }
     };
   }, []);
 
