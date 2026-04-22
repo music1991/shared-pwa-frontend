@@ -6,6 +6,7 @@ import LoginPage from '../../features/auth/pages/LoginPage';
 import DashboardHomePage from '../../features/dashboard/pages/DashboardHomePage';
 import AdminNotificationsPage from '../../features/notifications/pages/AdminNotificationsPage';
 import UserNotificationsPage from '../../features/notifications/pages/UserNotificationsPage';
+import UserPanelPage from '../../features/panel/pages/UsePanelPage';
 import ProtectedRoute from '../../features/auth/guards/ProtectedRoute';
 import RoleGuard from '../../features/auth/guards/RoleGuard';
 
@@ -42,6 +43,10 @@ function RouterView() {
         {
           path: 'notifications',
           element: <UserNotificationsPage />,
+        },
+        {
+          path: 'panel',
+          element: <UserPanelPage />,
         },
       ],
     },

@@ -11,7 +11,7 @@ export default function BottomNav() {
       {user?.role === 'admin' ? (
         <NavLink to={ROUTES.ADMIN_NOTIFICATIONS}>Enviar</NavLink>
       ) : (
-        <NavLink to={ROUTES.USER_NOTIFICATIONS}>Panel</NavLink>
+        <NavLink to={ROUTES.PANEL}>Panel</NavLink>
       )}
       <NavLink to={ROUTES.USER_NOTIFICATIONS}>Notifs</NavLink>
     </nav>
