@@ -1,5 +1,6 @@
 import useAuth from '../../auth/hooks/useAuth';
 import Card from '../../../shared/components/ui/Card';
+import InstallAppCard from '../components/InstallAppCard';
 
 export default function DashboardHomePage() {
   const { user } = useAuth();
@@ -27,6 +28,8 @@ export default function DashboardHomePage() {
           <strong>Listo para probar</strong>
         </div>
       </div>
+
+      <InstallAppCard />
 
       <Card>
         <h3 style={{ marginTop: 0 }}>Estado del sistema</h3>
