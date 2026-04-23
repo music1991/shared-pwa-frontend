@@ -35,6 +35,6 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 ## Instalación
 
-Clonar el repositorio.
-Npm install
-Levantar proyecto con npm run dev
+-Clonar el repositorio.
+-npm install.
+-Levantar proyecto con npm run dev.
