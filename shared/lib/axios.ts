@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://pwa-backend-vwvz.onrender.com/api',
+  baseURL: import.meta.env.VITE_URL_BASE,
   headers: {
     'Content-Type': 'application/json',
   },
