@@ -1,6 +1,6 @@
 {
-  "name": "Wayra Prototipe",
-  "short_name": "Wayra",
+  "name": "App Prototipe",
+  "short_name": "App",
   "description": "PWA para login, notificaciones push y gestión por roles.",
   "start_url": "/",
   "scope": "/",
@@ -10,12 +10,12 @@
   "theme_color": "#0b1220",
   "icons": [
     {
-      "src": "/pwa1.png",
+      "src": "",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/pwa2.png",
+      "src": "",
       "sizes": "512x512",
       "type": "image/png"
     }

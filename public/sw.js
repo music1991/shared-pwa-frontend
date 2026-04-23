@@ -42,8 +42,8 @@ self.addEventListener('push', (event) => {
 
       await self.registration.showNotification(data.title, {
         body: data.body,
-        icon: '/pwa1.png',
-        badge: '/pwa2.png',
+        icon: '',
+        badge: '',
         requireInteraction: true,
         data,
       });
